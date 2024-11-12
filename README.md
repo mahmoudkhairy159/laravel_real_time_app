@@ -3,7 +3,7 @@
 To get started, clone this repository.
 
 ```
-git clone https://github.com/engsahaly/starter_project_for_realtime.git
+git clone https://github.com/mahmoudkhairy159/laravel_real_time_app.git
 ```
 
 Next, copy your `.env.example` file as `.env` and configure your Database connection.
@@ -50,6 +50,6 @@ You can access admin login page using this url.
 
 ```
 http://localhost:8000/admin/login
-Email: admin@admin.com
-Password: 123456789
+Email: admin@gmail.com
+Password: 12345678
 ```
