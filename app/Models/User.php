@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -67,7 +68,7 @@ class User extends Authenticatable
     ##--------------------------------- SCOPES
 
 
-    ##--------------------------------- ACCESSORS & MUTATORS    
+    ##--------------------------------- ACCESSORS & MUTATORS
     /**
      * Interact with the user's password
      *
@@ -77,9 +78,10 @@ class User extends Authenticatable
     {
         return Attribute::make(
             set: function ($value) {
-                if ($value != null) {
-                    return bcrypt($value);
+                if ($value && Hash::needsRehash($value)) {
+                    return Hash::make($value);
                 }
+                return $value;
             },
         );
     }
