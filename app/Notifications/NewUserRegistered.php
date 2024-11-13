@@ -43,6 +43,7 @@ class NewUserRegistered extends Notification
             'id'=>$this->newUser->id,
             'name'=>$this->newUser->name,
             'email'=>$this->newUser->email,
+            'title'=> 'New user registered',
             'message'=> 'new user registered called '. $this->newUser->name
         ];
     }

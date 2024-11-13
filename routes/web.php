@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         ##------------------------------------------------------- ADMIN INDEX PAGE
         Route::get('/', AdminHomeController::class)->name('index');
-        
+        ##------------------------------------------------------- ADMIN Notifications
+
+        Route::controller(NotificationController::class)->prefix('notifications')->name('notifications.')->group(function () {
+            Route::post('/read_all', 'markAllAsRead')->name('read_all');
+            Route::post('/delete_all',  'deleteAll')->name('delete_all');
+        });
     });
 
     require __DIR__ . '/adminAuth.php';
