@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\NewUserRegistered as EventsNewUserRegistered;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
@@ -36,7 +38,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -51,8 +53,13 @@ class RegisteredUserController extends Controller
         // $admin=Admin::find(1);
         // $admin->notify(new NewUserRegistered($user));
         //send notifications to a specific admin.
-        Notification::send(Admin::all(),new NewUserRegistered($user));
-
+        Notification::send(Admin::all(), new NewUserRegistered($user));
+        //broadcast user registration event to admin
+        //EventsNewUserRegistered::dispatch($user);
+        //or
+        Broadcast(new EventsNewUserRegistered($user));
+        //or
+        //event(new EventsNewUserRegistered($user));
 
 
         Auth::login($user);

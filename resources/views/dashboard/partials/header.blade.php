@@ -11,14 +11,14 @@
         <span class="fe fe-bell fe-16"></span>
         <span class="dot dot-md text-danger">
             @if (Auth::guard('admin')->check())
-                {{ Auth::guard('admin')->user()->unreadNotifications->count()>0??'' }}
+            {{ Auth::guard('admin')->user()->unreadNotifications->count() > 0 ? Auth::guard('admin')->user()->unreadNotifications->count() : '' }}
             @endif
         </span>
     </a>
 </li>
 
 {{-- Notification Modal --}}
-<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+<div class="modal fade modal-notif modal-slide notificationModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">

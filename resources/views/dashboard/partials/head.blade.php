@@ -26,5 +26,48 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/css/app-dark.css" id="darkTheme" disabled>
     @stack('styles')
 
-    `
+    <!-- Pusher-->
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = false;
+
+        var pusher = new Pusher('9f3efc6359fe8387db7d', {
+            cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('new_user_registered_channel');
+        channel.bind('new-user-registered-event', function(data) {
+            console.log('Event received:', data);
+
+            // Increment notification count
+            const notificationCountElement = document.querySelector('.notificationIcon .dot');
+            let currentCount = parseInt(notificationCountElement.textContent.trim()) || 0;
+            notificationCountElement.textContent = currentCount + 1;
+
+            // Add the new notification to the notifications list
+            const notificationList = document.querySelector('.list-group');
+            const newNotificationHTML = `
+    <div class="list-group-item bg-light">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <span class="fe fe-box fe-24"></span>
+            </div>
+            <div class="col">
+                <small><strong>${data.title ?? 'New Notification'}</strong></small>
+                <div class="my-0 text-muted small">
+                    ${data.message ?? 'No message available'}
+                </div>
+                <small class="badge badge-pill badge-light text-muted">
+                    Just now
+                </small>
+            </div>
+        </div>
+    </div>
+`;
+            notificationList.insertAdjacentHTML('afterbegin', newNotificationHTML);
+        });
+    </script>
+    <!-- Pusher-->
+
 </head>
