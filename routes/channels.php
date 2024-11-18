@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\NewUserRegisteredChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,12 +14,14 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
+Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
 
-//private channel
-Broadcast::channel('new_user_registered_channel', function ($user) {
-    return true;
-},['guards'=>['admin']]);
-//private channel
+// //private channel
+// Broadcast::channel('new_user_registered_channel', function ($user) {
+//     return true;
+// },['guards'=>['admin']]);
+
+Broadcast::channel('new_user_registered_channel', NewUserRegisteredChannel::class,['guards'=>['admin']]);
+// //private channel
