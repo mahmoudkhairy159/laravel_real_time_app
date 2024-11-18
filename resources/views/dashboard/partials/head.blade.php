@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/css/app-dark.css" id="darkTheme" disabled>
     @stack('styles')
 
-    <!-- Pusher-->
+    {{--
+     <!-- Pusher-->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
         // Enable pusher logging - don't include this in production
@@ -69,5 +70,12 @@
         });
     </script>
     <!-- Pusher-->
+    --}}
+
+    {{-- laravel Echo --}}
+
+    @vite('resources/js/app.js');
+ 
+    {{-- laravel Echo --}}
 
 </head>

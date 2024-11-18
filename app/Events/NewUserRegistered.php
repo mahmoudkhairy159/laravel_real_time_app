@@ -22,7 +22,7 @@ class NewUserRegistered implements ShouldBroadcast
     public function __construct($user)
     {
         $this->user=$user;
-        $this->message="New user registered Called $user->name";
+        $this->message = "New user registered: {$user->name}";
     }
 
     /**
@@ -30,15 +30,32 @@ class NewUserRegistered implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
+
+     //public channel
+    // public function broadcastOn(): array
+    // {
+    //     return [
+    //         new Channel('new_user_registered_channel'),
+    //     ];
+    // }
+    //private channel
     public function broadcastOn(): array
     {
         return [
-            new Channel('new_user_registered_channel'),
+            new PrivateChannel('new_user_registered_channel'),
         ];
     }
+
 
     public function broadcastAs()
     {
         return 'new-user-registered-event';
+    }
+    public function broadcastWith(): array
+    {
+        return [
+            'title' => 'New User Registered',
+            'message' => $this->message,
+        ];
     }
 }
