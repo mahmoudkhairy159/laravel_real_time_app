@@ -18,10 +18,19 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-// //private channel
-// Broadcast::channel('new_user_registered_channel', function ($user) {
-//     return true;
-// },['guards'=>['admin']]);
+//private channel
+Broadcast::channel('new_user_registered_channel', function ($user) {
+    return true;
+},['guards'=>['admin']]);
 
-Broadcast::channel('new_user_registered_channel', NewUserRegisteredChannel::class,['guards'=>['admin']]);
+// Broadcast::channel('new_user_registered_channel', NewUserRegisteredChannel::class,['guards'=>['admin']]);
 // //private channel
+
+
+//presence channel
+Broadcast::channel('admin_room_channel', function ($user) {
+    return [
+        'id'=>$user->id,
+        'name'=>$user->name,
+    ];
+},['guards'=>['admin']]);

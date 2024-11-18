@@ -103,3 +103,29 @@ window.Echo.private('new_user_registered_channel')
         `;
         notificationList.insertAdjacentHTML('afterbegin', newNotificationHTML);
     });
+
+
+
+
+
+
+
+
+//presence channel
+window.Echo.join(`admin_room_channel`)
+    .here((users) => {
+        console.log('here');
+        console.log(users);
+    })
+    .joining((user) => {
+        console.log('joining');
+        console.log(user.name);
+    })
+    .leaving((user) => {
+        console.log('leaving');
+        console.log(user.name);
+    })
+    .error((error) => {
+        console.log('error');
+        console.error(error);
+    });

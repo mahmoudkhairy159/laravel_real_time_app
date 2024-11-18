@@ -10,19 +10,16 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewUserRegistered implements ShouldBroadcast
+class NewAdminRoom implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
-    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->user=$user;
-        $this->message = "New user registered: {$user->name}";
+        //
     }
 
     /**
@@ -30,19 +27,10 @@ class NewUserRegistered implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-
-     //public channel
-    // public function broadcastOn(): array
-    // {
-    //     return [
-    //         new Channel('new_user_registered_channel'),
-    //     ];
-    // }
-    //private channel
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('new_user_registered_channel'),
+            new PresenceChannel('admin_room_channel'),
         ];
     }
 
@@ -50,13 +38,7 @@ class NewUserRegistered implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'new-user-registered-event';
+        return 'new-admin-room-event';
     }
-    public function broadcastWith(): array
-    {
-        return [
-            'title' => 'New User Registered',
-            'message' => $this->message,
-        ];
-    }
+
 }
